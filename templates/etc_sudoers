@@ -1,0 +1,53 @@
+#
+# This file MUST be edited with the 'visudo' command as root.
+#
+# Please consider adding local content in /etc/sudoers.d/ instead of
+# directly modifying this file.
+#
+# See the man page for details on how to write a sudoers file.
+#
+Defaults	env_reset
+Defaults	secure_path="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+
+# Host alias specification
+
+# User alias specification
+
+# Cmnd alias specification
+{% if sudo_commands_services is defined and sudo_commands_services %}
+Cmnd_Alias SERVICES = \
+{% for command in sudo_commands_services %}
+                      {{ command }},\
+{% endfor %}
+                      /bin/false
+{% endif %}
+
+{% if sudo_commands_main is defined and sudo_commands_main %}
+Cmnd_Alias DEV_MAIN = \
+{% for command in sudo_commands_main %}
+                      {{ command }},\
+{% endfor %}
+                      /bin/false
+{% endif %}
+
+{% if sudo_commands_misc is defined and sudo_commands_misc %}
+Cmnd_Alias DEV_MISC = \
+{% for command in sudo_commands_misc %}
+                      {{ command }},\
+{% endfor %}
+                      /bin/false
+{% endif %}
+
+# User privilege specification
+root	ALL=(ALL:ALL) ALL
+
+# Members of the admin group may gain root privileges
+%admin	ALL=(ALL:ALL) NOPASSWD: ALL
+
+# Allow members of group sudo to execute any command
+%sudo	ALL=(ALL:ALL) NOPASSWD: SERVICES, DEV_MAIN, DEV_MISC
+
+# See sudoers(5) for more information on "#include" directives:
+
+#includedir /etc/sudoers.d
+

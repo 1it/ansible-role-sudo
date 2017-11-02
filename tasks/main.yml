@@ -1,0 +1,22 @@
+---
+- name: Sudo | Ensure sudo is installed
+  apt:
+    name: sudo
+    state: present
+  when: ansible_distribution ==  'Debian' or ansible_distribution == 'Ubuntu'
+
+- name: Sudo | Ensure sudo is installed
+  yum:
+    name: sudo
+    state: present
+  when: ansible_distribution == 'CentOS' or ansible_distribution == 'RedHat'
+
+- name: Sudo | Copy sudoers file to /etc/sudoers
+  template:
+    src: etc_sudoers
+    dest: /etc/sudoers
+    mode: 440
+    owner: root
+    group: root
+    validate: 'visudo -cf %s'
+  when: sudo_set_defaults is defined
