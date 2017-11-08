@@ -47,6 +47,13 @@ root	ALL=(ALL:ALL) ALL
 # Allow members of group sudo to execute any command
 %sudo	ALL=(ALL:ALL) NOPASSWD: SERVICES, DEV_MAIN, DEV_MISC
 
+{% if sudo_custom_definitions is defined and sudo_custom_definitions %}
+# Custom users/groups definitions
+{% for entry in sudo_custom_definitions %}
+{{ entry }}
+{% endfor %}
+{% endif %}
+
 # See sudoers(5) for more information on "#include" directives:
 
 #includedir /etc/sudoers.d

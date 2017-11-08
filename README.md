@@ -24,6 +24,9 @@ sudo_commands_main:
 sudo_commands_misc:
     - /usr/sbin/php5dismod
     - /usr/sbin/php5enmod
+sudo_custom_definitions:
+    - user ALL=(ALL) NOPASSWD: /usr/sbin/nginx
+    - editor ALL=(www-data) NOPASSWD: /usr/bin/vim
 ```
 ## Playbook example
 ```yaml
