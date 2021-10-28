@@ -5,3 +5,4 @@ sudo_commands_services:
 sudo_commands_main: []
 sudo_commands_misc: []
 sudo_custom_definitions: []
+sudo_nopasswd_group: ''

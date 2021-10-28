@@ -11,7 +11,7 @@
     state: present
   when: ansible_distribution == 'CentOS' or ansible_distribution == 'RedHat'
 
-- name: Sudo | Copy sudoers file to /etc/sudoers
+- name: Sudo | Copy default sudoers file to /etc/sudoers
   template:
     src: etc_sudoers
     dest: /etc/sudoers
@@ -19,4 +19,14 @@
     owner: root
     group: root
     validate: 'visudo -cf %s'
-  when: sudo_set_defaults is defined
+  when: sudo_set_custom_commands is not defined
+
+- name: Sudo | Copy custom command sudoers file to /etc/sudoers
+  template:
+    src: etc_sudoers_custom
+    dest: /etc/sudoers
+    mode: 440
+    owner: root
+    group: root
+    validate: 'visudo -cf %s'
+  when: sudo_set_custom_commands is defined

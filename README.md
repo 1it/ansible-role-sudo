@@ -13,6 +13,7 @@ Install
 ## Variables
 Sudoers cmnd alias specification example
 ```yaml
+sudo_set_custom_commands: yes # When not defined a basic config will be set (etc_sudoers)
 sudo_commands_services:
     - /usr/sbin/service nginx reload
     - /usr/sbin/service elasticsearch restart
