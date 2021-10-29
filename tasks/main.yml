@@ -29,4 +29,15 @@
     owner: root
     group: root
     validate: 'visudo -cf %s'
-  when: sudo_set_custom_commands is defined
+  when: sudo_set_custom_commands is defined and sudo_set_per_user is iterable
+
+- name: Sudo | Create sudoers file per user
+  template:
+    src: etc_sudoers_per_user
+    dest: "/etc/sudoers.d/{{ item }}"
+    mode: 440
+    owner: root
+    group: root
+    validate: 'visudo -cf %s'
+  when: sudo_set_per_user is defined and sudo_set_per_user is iterable
+  loop: "{{ sudo_set_per_user }}"

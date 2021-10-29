@@ -1,0 +1,2 @@
+{{ item }} ALL=(ALL:ALL) NOPASSWD: ALL
+

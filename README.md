@@ -13,7 +13,8 @@ Install
 ## Variables
 Sudoers cmnd alias specification example
 ```yaml
-sudo_set_custom_commands: yes # When not defined a basic config will be set (etc_sudoers)
+sudo_nopasswd_group: 'admin' # By default - a group must be created in advance
+sudo_set_custom_commands: yes # When not defined a basic config will be set (from templates/etc_sudoers)
 sudo_commands_services:
     - /usr/sbin/service nginx reload
     - /usr/sbin/service elasticsearch restart
@@ -28,6 +29,9 @@ sudo_commands_misc:
 sudo_custom_definitions:
     - user ALL=(ALL) NOPASSWD: /usr/sbin/nginx
     - editor ALL=(www-data) NOPASSWD: /usr/bin/vim
+sudo_set_per_user: # Creates sudoes file in /etc/sudoers.d/user_name with NOPASSWD: ALL directive.
+    - alice
+    - bob
 ```
 ## Playbook example
 ```yaml
